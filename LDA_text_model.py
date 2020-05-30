@@ -24,7 +24,6 @@ class LDAtext:
             processed_docs.append(preprocess(doc))
         return processed_docs
 
-
     def lemmatize_stemming(self, text):
         return self.stemmer.stem(WordNetLemmatizer().lemmatize(text, pos='v'))
 
