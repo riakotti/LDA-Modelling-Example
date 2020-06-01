@@ -9,7 +9,6 @@ import pandas as pd
 
 import numpy as np
 import nltk
-nltk.download('wordnet')
 
 
 class LDAtext:
@@ -17,11 +16,12 @@ class LDAtext:
         self.stemmer = SnowballStemmer("english")
 
     def text_preprocess_(self, documents):
-
+        '''
+        documents: list of strings
+        '''
         processed_docs = []
-        # newsgroups_train.data
         for doc in documents:
-            processed_docs.append(preprocess(doc))
+            processed_docs.append(self.preprocess(doc))
         return processed_docs
 
     def lemmatize_stemming(self, text):
@@ -33,7 +33,7 @@ class LDAtext:
         for token in gensim.utils.simple_preprocess(text):
             if token not in gensim.parsing.preprocessing.STOPWORDS and len(
                     token) > 3:
-                result.append(lemmatize_stemming(token))
+                result.append(token)
 
         return result
 
@@ -46,12 +46,12 @@ class LDAtext:
 
         self.dictionary = gensim.corpora.Dictionary(processed_docs)
 
-        bow_corpus = [dictionary.doc2bow(doc) for doc in processed_docs]
+        bow_corpus = [self.dictionary.doc2bow(doc) for doc in processed_docs]
 
         self.lda_model = gensim.models.LdaMulticore(
             bow_corpus,
             num_topics=number_of_topics,
-            id2word=dictionary,
+            id2word=self.dictionary,
             passes=number_of_passes,
             workers=number_of_workers)
 
