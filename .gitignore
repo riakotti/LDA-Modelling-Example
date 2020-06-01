@@ -1,0 +1,7 @@
+
+Untitled.ipynb
+*.json
+recipes.py
+.ipynb_checkpoints/Untitled-checkpoint.ipynb
+*.pyc
+.DS_Store
